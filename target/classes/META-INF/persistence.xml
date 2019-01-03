@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="IMSE_Data_Filler">
+		<class>at.univie.cc.model.Assignment</class>
+		<class>at.univie.cc.model.AssignmentPK</class>
+		<class>at.univie.cc.model.BankAccount</class>
+		<class>at.univie.cc.model.Course</class>
+		<class>at.univie.cc.model.Location</class>
+		<class>at.univie.cc.model.Login</class>
+		<class>at.univie.cc.model.Organization</class>
+		<class>at.univie.cc.model.Schedule</class>
+		<class>at.univie.cc.model.SchedulePK</class>
+		<class>at.univie.cc.model.Student</class>
+		<class>at.univie.cc.model.Teacher</class>
+		<class>at.univie.cc.model.Transaction</class>
+	</persistence-unit>
+</persistence>

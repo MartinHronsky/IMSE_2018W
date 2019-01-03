@@ -1,0 +1,14 @@
+at\univie\cc\model\AssignmentPK.class
+at\univie\cc\model\Transaction.class
+at\univie\cc\HibernateUtil.class
+at\univie\cc\model\Assignment.class
+at\univie\cc\model\Location.class
+at\univie\cc\model\Teacher.class
+at\univie\cc\model\Schedule.class
+at\univie\cc\model\Course.class
+at\univie\cc\model\BankAccount.class
+at\univie\cc\model\SchedulePK.class
+at\univie\cc\model\Organization.class
+at\univie\cc\App.class
+at\univie\cc\model\Login.class
+at\univie\cc\model\Student.class
