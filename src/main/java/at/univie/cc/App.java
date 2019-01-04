@@ -1,9 +1,8 @@
 package at.univie.cc;
 
+import at.univie.cc.model.Location;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
-import at.univie.cc.model.Location;
 
 /**
  * Driver for the program.
@@ -48,6 +47,10 @@ public class App {
 		System.out.println(sg.getFrom() + " " + sg.getTo() + " " + sg.getNote());
 		sg.generateSchedule();
 		System.out.println(sg.getFrom() + " " + sg.getTo() + " " + sg.getNote());
+
+		BankAccountGenerator bag = new BankAccountGenerator();
+		System.out.println(bag.getRandomCreditCardNumber() + " " + bag.getRandomAmount());
+		System.out.println(bag.getRandomCreditCardNumber() + " " + bag.getRandomAmount());
 
 		//-------------------------------------
 		Location location = new Location();
