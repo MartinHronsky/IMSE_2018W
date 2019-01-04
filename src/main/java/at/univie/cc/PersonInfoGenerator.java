@@ -41,7 +41,7 @@ public class PersonInfoGenerator {
 
 	//-----Random String of letters-
 	public String getPassword() {
-		char[] word = new char[rand.nextInt(8) + 3];
+		char[] word = new char[rand.nextInt(10) + 3];
 		for (int j = 0; j < word.length; j++) {
 			word[j] = (char) ('a' + rand.nextInt(26));
 		}

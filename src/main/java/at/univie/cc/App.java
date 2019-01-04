@@ -18,7 +18,12 @@ public class App {
 			usage();
 		}
 
+
 		GeneratePerson cd = new GeneratePerson();
+		cd.generatePerson();
+		System.out.println(cd.getName() + " " + cd.getLogin() + " " + cd.getPassword() + " " + cd.getDoB());
+		cd.generatePerson();
+		System.out.println(cd.getName() + " " + cd.getLogin() + " " + cd.getPassword() + " " + cd.getDoB());
 
 		Location location = new Location();
 		location.setNote("Test");

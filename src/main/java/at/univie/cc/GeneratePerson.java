@@ -19,7 +19,7 @@ public class GeneratePerson {
     public void generatePerson() {
         String fN = pG.getFirstNames();
         String lN = pG.getLastNames();
-        login = fN + lN.substring(0, 1) + random.nextInt();
+        login = fN + lN.substring(0, 1) + random.nextInt(3);
         name = fN + " " + lN;
         password = pG.getPassword();
         DoB = pG.getRandomDoB();
