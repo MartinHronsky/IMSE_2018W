@@ -37,6 +37,12 @@ public class App {
 		crgen.generateCourse();
 		System.out.println(crgen.getName() + " " + crgen.getCr_type() + " " + crgen.getLanguage() + " " + crgen.getPrice() + " " + crgen.getNotes());
 
+		LocationGenerator lg = new LocationGenerator();
+		lg.generateLocation();
+		System.out.println(lg.getLoc_id() + ", " + lg.getCapacity() + ", " + lg.getNote());
+		lg.generateLocation();
+		System.out.println(lg.getLoc_id() + ", " + lg.getCapacity() + ", " + lg.getNote());
+
 		//
 		Location location = new Location();
 		location.setNote("Test");
