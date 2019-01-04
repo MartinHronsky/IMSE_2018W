@@ -18,12 +18,14 @@ public class App {
 			usage();
 		}
 
+		GeneratePerson cd = new GeneratePerson();
+
 		Location location = new Location();
 		location.setNote("Test");
 		location.setIdLocation("Test");
 		location.setRoomCapacity(50);
 
-		Session session = HibernateUtil.getSessionFactory(args[0]).openSession();
+		Session session = HibernateUtil.getSessionFactory("C:\\Users\\romco\\Desktop\\UniProjects\\IMSE\\IMSE_2018W\\src\\main\\resources\\configuration.properties").openSession();
 		Transaction transaction = session.beginTransaction();
 
 		session.save(location);
