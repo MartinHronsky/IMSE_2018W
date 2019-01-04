@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.*;
 
+//Person names from http://listofrandomnames.com/
 public class PersonInfoGenerator {
 
 	private Random rand = new Random();

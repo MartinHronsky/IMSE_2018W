@@ -18,7 +18,7 @@ public class App {
 			usage();
 		}
 
-		//Testing generators
+		//Testing generators------------------------------
 		GeneratePerson cd = new GeneratePerson();
 		cd.generatePerson();
 		System.out.println(cd.getName() + " " + cd.getLogin() + " " + cd.getPassword() + " " + cd.getDoB());
@@ -43,7 +43,13 @@ public class App {
 		lg.generateLocation();
 		System.out.println(lg.getLoc_id() + ", " + lg.getCapacity() + ", " + lg.getNote());
 
-		//
+		ScheduleGenerator sg = new ScheduleGenerator();
+		sg.generateSchedule();
+		System.out.println(sg.getFrom() + " " + sg.getTo() + " " + sg.getNote());
+		sg.generateSchedule();
+		System.out.println(sg.getFrom() + " " + sg.getTo() + " " + sg.getNote());
+
+		//-------------------------------------
 		Location location = new Location();
 		location.setNote("Test");
 		location.setIdLocation("Test");

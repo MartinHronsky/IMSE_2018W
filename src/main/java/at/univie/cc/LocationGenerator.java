@@ -9,6 +9,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+//streets adresses from https://www.briandunning.com/sample-data/
+//used UK and US 500 free dataset, combined 250 from UK and 250 from US data
 public class LocationGenerator {
 
 	public LocationGenerator() {
