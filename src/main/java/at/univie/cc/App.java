@@ -18,13 +18,20 @@ public class App {
 			usage();
 		}
 
-
+		//Testing generators
 		GeneratePerson cd = new GeneratePerson();
 		cd.generatePerson();
 		System.out.println(cd.getName() + " " + cd.getLogin() + " " + cd.getPassword() + " " + cd.getDoB());
 		cd.generatePerson();
 		System.out.println(cd.getName() + " " + cd.getLogin() + " " + cd.getPassword() + " " + cd.getDoB());
 
+		OrganizationGenerator og = new OrganizationGenerator();
+		og.generateOrg();
+		System.out.println(og.getName() + " " + og.getLogin() + " " + og.getPassword() + " " + og.getSup());
+		og.generateOrg();
+		System.out.println(og.getName() + " " + og.getLogin() + " " + og.getPassword() + " " + og.getSup());
+
+		//
 		Location location = new Location();
 		location.setNote("Test");
 		location.setIdLocation("Test");
