@@ -31,6 +31,12 @@ public class App {
 		og.generateOrg();
 		System.out.println(og.getName() + " " + og.getLogin() + " " + og.getPassword() + " " + og.getSup());
 
+		CourseGenerator crgen = new CourseGenerator();
+		crgen.generateCourse();
+		System.out.println(crgen.getName() + " " + crgen.getCr_type() + " " + crgen.getLanguage() + " " + crgen.getPrice() + " " + crgen.getNotes());
+		crgen.generateCourse();
+		System.out.println(crgen.getName() + " " + crgen.getCr_type() + " " + crgen.getLanguage() + " " + crgen.getPrice() + " " + crgen.getNotes());
+
 		//
 		Location location = new Location();
 		location.setNote("Test");
