@@ -1,10 +1,12 @@
 package at.univie.imse;
 
-import at.univie.imse.model.Location;
+import at.univie.imse.model.*;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.io.File;
+import java.time.ZoneId;
+import java.util.Date;
 
 /**
  * Driver for the program.
@@ -55,18 +57,108 @@ public class App {
 		System.out.println(bag.getRandomCreditCardNumber() + " " + bag.getRandomAmount());
 
 		//-------------------------------------
-		Location location = new Location();
-		location.setNote("Test");
-		location.setIdLocation("Test");
-		location.setRoomCapacity(50);
 
 		File file = new File("src/main/resources/configuration.properties");
 		Session session = HibernateUtil.getSessionFactory(file.getAbsolutePath()).openSession();
 		Transaction transaction = session.beginTransaction();
 
-		session.save(location);
+		Teacher t = new Teacher();
+		Login tl = new Login();
+		cd.generatePerson();
+		tl.setUserName(cd.getLogin());
+		tl.setPassword(cd.getPassword());
+		t.setIdTeacher(cd.getLogin());
+		t.setLogin(tl);
+		t.setName(cd.getName());
+		t.setDateOfBirth(Date.from(cd.getDoB().atStartOfDay(ZoneId.systemDefault()).toInstant()));
 
-		transaction.commit();
+		Student s = new Student();
+		Login sl = new Login();
+		cd.generatePerson();
+		sl.setUserName(cd.getLogin());
+		sl.setPassword(cd.getPassword());
+		s.setLogin(sl);
+		s.setIdStudent(cd.getLogin());
+		s.setName(cd.getName());
+		s.setDateOfBirth(Date.from(cd.getDoB().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+
+		Organization o = new Organization();
+		Login ol = new Login();
+		og.generateOrg();
+		ol.setUserName(og.getLogin());
+		ol.setPassword(og.getPassword());
+		o.setLogin(ol);
+		o.setIdOrganization(og.getLogin());
+		o.setName(og.getName());
+
+		BankAccount bA = new BankAccount();
+		bA.setUserName(s.getIdStudent());
+		bA.setCard_number(bag.getRandomCreditCardNumber());
+		bA.setAmount(bag.getRandomAmount());
+		bA.setLogin(sl);
+
+		at.univie.imse.model.Transaction tran = new at.univie.imse.model.Transaction();
+		tran.setStudent(s);
+		tran.setTeacher(t);
+		tran.setAmount(bA.getAmount());
+		//"P" as passed, "F" as failed
+		tran.setState("P");
+		tran.setIdTransaction(0);
+
+		Course c = new Course();
+		crgen.generateCourse();
+		c.setIdCourse(crgen.getName());
+		c.setTeacher(t);
+		c.setLanguage(crgen.getLanguage());
+		c.setTypeOfTheCourse(crgen.getCr_type());
+		c.setPrice(crgen.getPrice());
+		c.setNote(crgen.getNotes());
+
+		Assignment a = new Assignment();
+		AssignmentPK apk = new AssignmentPK();
+		apk.setIdCourse(c.getIdCourse());
+		apk.setIdStudent(s.getIdStudent());
+		a.setId(apk);
+		a.setCourse(c);
+		a.setStudent(s);
+		a.setIdTransaction(tran.getIdTransaction());
+
+		Location location = new Location();
+		lg.generateLocation();
+		location.setIdLocation(lg.getLoc_id());
+		location.setRoomCapacity(lg.getCapacity());
+		location.setNote(lg.getNote());
+
+		SchedulePK sch = new SchedulePK();
+		Schedule schedule = new Schedule();
+		sg.generateSchedule();
+		sch.setIdCourse(c.getIdCourse());
+		sch.setIdLocation(location.getIdLocation());
+		sch.setDateFrom(Date.from(sg.getFrom().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+		sch.setDateTo(Date.from(sg.getTo().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+		schedule.setId(sch);
+		schedule.setLocation(location);
+		schedule.setCourse(c);
+		schedule.setNote(sg.getNote());
+
+		session.save(tl);
+		session.save(t);
+		session.save(sl);
+		session.save(s);
+		session.save(ol);
+		session.save(o);
+		session.save(bA);
+		session.save(tran);
+		session.save(c);
+		session.save(a);
+		session.save(location);
+		session.save(schedule);
+
+		try {
+			transaction.commit();
+		} catch (Exception e) {
+			System.out.println(e.getLocalizedMessage());
+		}
 
 	}
 

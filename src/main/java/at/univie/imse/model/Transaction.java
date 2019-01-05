@@ -16,6 +16,7 @@ public class Transaction implements Serializable {
 
 	@Id
 	@Column(name = "id_transaction", unique = true, nullable = false)
+	@GeneratedValue(generator = "public.transaction_id_seq")
 	private Integer idTransaction;
 
 	@Column(precision = 10, scale = 2)

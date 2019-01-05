@@ -1,5 +1,7 @@
 package at.univie.imse;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Random;
 
 public class CourseGenerator {
@@ -9,7 +11,7 @@ public class CourseGenerator {
 	private String name;
 	private String language;
 	private String cr_type;
-	private int price;
+	private BigDecimal price;
 	private String notes;
 
 	private Random rand = new Random();
@@ -28,11 +30,13 @@ public class CourseGenerator {
 		if (cr_type.equals("Language Cert.")) {
 			notes += " " + test;
 			//rand.nextInt((max - min) + 1) + min
-			price = rand.nextInt((3000 - 700) + 1) + 700;
+			int pr = rand.nextInt((3000 - 700) + 1) + 700;
+			price = new BigDecimal(pr).setScale(0, RoundingMode.HALF_UP);
 		}
 		notes += " " + note[rand.nextInt(note.length)];
 		//rand.nextInt((max - min) + 1) + min
-		price = rand.nextInt((1500 - 150) + 1) + 150;
+		int pr = rand.nextInt((1500 - 150) + 1) + 150;
+		price = new BigDecimal(pr).setScale(0, RoundingMode.HALF_UP);
 	}
 
 	public String getName() {
@@ -47,7 +51,7 @@ public class CourseGenerator {
 		return cr_type;
 	}
 
-	public int getPrice() {
+	public BigDecimal getPrice() {
 		return price;
 	}
 
