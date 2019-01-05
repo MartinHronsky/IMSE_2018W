@@ -4,7 +4,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>at.univie.cc</groupId>
+    <groupId>at.univie.imse</groupId>
   <artifactId>IMSE_Data_Filler</artifactId>
   <version>0.0.1-SNAPSHOT</version>
 
@@ -60,7 +60,7 @@
           		<manifest>
             		<addClasspath>true</addClasspath>
             		<classpathPrefix>lib/</classpathPrefix>
-            		<mainClass>at.univie.cc.App</mainClass>
+                    <mainClass>at.univie.imse.App</mainClass>
           		</manifest>
         	</archive>
       	</configuration>
@@ -87,7 +87,7 @@
   				<configuration>
     				<archive>
       					<manifest>
-        					<mainClass>at.univie.cc.App</mainClass>
+                            <mainClass>at.univie.imse.App</mainClass>
      					</manifest>
    					</archive>
     				<descriptorRefs>
