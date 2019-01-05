@@ -1,18 +1,30 @@
 package at.univie.imse;
 
-import at.univie.imse.model.*;
+import java.io.FileInputStream;
+import java.util.Properties;
+
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
-import java.io.FileInputStream;
-import java.util.Properties;
+import at.univie.imse.model.Assignment;
+import at.univie.imse.model.AssignmentPK;
+import at.univie.imse.model.BankAccount;
+import at.univie.imse.model.Course;
+import at.univie.imse.model.Location;
+import at.univie.imse.model.Login;
+import at.univie.imse.model.Organization;
+import at.univie.imse.model.Schedule;
+import at.univie.imse.model.SchedulePK;
+import at.univie.imse.model.Student;
+import at.univie.imse.model.Teacher;
+import at.univie.imse.model.Transaction;
 
 /**
  * Utility class that takes care of creating the session factory. This involves
- * reading the configuration file from the application parameters.
+ * reading the configuration file.
  * 
  * @author MartinHronsky
  *

@@ -1,12 +1,23 @@
 package at.univie.imse;
 
-import at.univie.imse.model.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import java.io.File;
-import java.time.ZoneId;
-import java.util.Date;
+import at.univie.imse.generators.AbstractGenerator;
+import at.univie.imse.model.Assignment;
+import at.univie.imse.model.BankAccount;
+import at.univie.imse.model.Course;
+import at.univie.imse.model.Location;
+import at.univie.imse.model.Login;
+import at.univie.imse.model.Organization;
+import at.univie.imse.model.Schedule;
+import at.univie.imse.model.Student;
+import at.univie.imse.model.Teacher;
 
 /**
  * Driver for the program.
@@ -15,154 +26,65 @@ import java.util.Date;
  *
  */
 public class App {
+
 	public static void main(String[] args) {
 
-		/*if (args.length != 1) {
-			usage();
-		}*/
+		Session session = HibernateUtil.getSessionFactory("src/main/resources/configuration.properties").openSession();
 
-		//Testing generators------------------------------
-		GeneratePerson cd = new GeneratePerson();
-		cd.generatePerson();
-		System.out.println(cd.getName() + " " + cd.getLogin() + " " + cd.getPassword() + " " + cd.getDoB());
-		cd.generatePerson();
-		System.out.println(cd.getName() + " " + cd.getLogin() + " " + cd.getPassword() + " " + cd.getDoB());
+		Map<Teacher, Login> teachersWithLogins = AbstractGenerator.generateTeachersWithLogins(5000);
+		Map<Student, Login> studentsWithLogins = AbstractGenerator.generateStudentsWithLogins(10000);
+		Map<Organization, Login> organizationsWithLogins = AbstractGenerator.generateOrganizationsWithLogins(150);
+		List<BankAccount> bankAccounts = AbstractGenerator.generateBankAccounts(studentsWithLogins.values());
+		List<Student> students = new ArrayList<Student>(studentsWithLogins.keySet());
+		List<Teacher> teachers = new ArrayList<Teacher>(teachersWithLogins.keySet());
+		List<at.univie.imse.model.Transaction> transactions = AbstractGenerator.generateTransactions(students, teachers,
+				1400);
+		List<Course> courses = AbstractGenerator.generateCourses(teachers, 360);
+		List<Assignment> assignments = AbstractGenerator.generateAssignments(transactions, courses);
+		List<Location> locations = AbstractGenerator.generateLocations(150);
+		List<Schedule> schedules = AbstractGenerator.generateSchedules(courses, locations, 4000);
 
-		OrganizationGenerator og = new OrganizationGenerator();
-		og.generateOrg();
-		System.out.println(og.getName() + " " + og.getLogin() + " " + og.getPassword() + " " + og.getSup());
-		og.generateOrg();
-		System.out.println(og.getName() + " " + og.getLogin() + " " + og.getPassword() + " " + og.getSup());
-
-		CourseGenerator crgen = new CourseGenerator();
-		crgen.generateCourse();
-		System.out.println(crgen.getName() + " " + crgen.getCr_type() + " " + crgen.getLanguage() + " " + crgen.getPrice() + " " + crgen.getNotes());
-		crgen.generateCourse();
-		System.out.println(crgen.getName() + " " + crgen.getCr_type() + " " + crgen.getLanguage() + " " + crgen.getPrice() + " " + crgen.getNotes());
-
-		LocationGenerator lg = new LocationGenerator();
-		lg.generateLocation();
-		System.out.println(lg.getLoc_id() + ", " + lg.getCapacity() + ", " + lg.getNote());
-		lg.generateLocation();
-		System.out.println(lg.getLoc_id() + ", " + lg.getCapacity() + ", " + lg.getNote());
-
-		ScheduleGenerator sg = new ScheduleGenerator();
-		sg.generateSchedule();
-		System.out.println(sg.getFrom() + " " + sg.getTo() + " " + sg.getNote());
-		sg.generateSchedule();
-		System.out.println(sg.getFrom() + " " + sg.getTo() + " " + sg.getNote());
-
-		BankAccountGenerator bag = new BankAccountGenerator();
-		System.out.println(bag.getRandomCreditCardNumber() + " " + bag.getRandomAmount());
-		System.out.println(bag.getRandomCreditCardNumber() + " " + bag.getRandomAmount());
-
-		//-------------------------------------
-
-		File file = new File("src/main/resources/configuration.properties");
-		Session session = HibernateUtil.getSessionFactory(file.getAbsolutePath()).openSession();
 		Transaction transaction = session.beginTransaction();
 
-		Teacher t = new Teacher();
-		Login tl = new Login();
-		cd.generatePerson();
-		tl.setUserName(cd.getLogin());
-		tl.setPassword(cd.getPassword());
-		t.setIdTeacher(cd.getLogin());
-		t.setLogin(tl);
-		t.setName(cd.getName());
-		t.setDateOfBirth(Date.from(cd.getDoB().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-
-		Student s = new Student();
-		Login sl = new Login();
-		cd.generatePerson();
-		sl.setUserName(cd.getLogin());
-		sl.setPassword(cd.getPassword());
-		s.setLogin(sl);
-		s.setIdStudent(cd.getLogin());
-		s.setName(cd.getName());
-		s.setDateOfBirth(Date.from(cd.getDoB().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-
-		Organization o = new Organization();
-		Login ol = new Login();
-		og.generateOrg();
-		ol.setUserName(og.getLogin());
-		ol.setPassword(og.getPassword());
-		o.setLogin(ol);
-		o.setIdOrganization(og.getLogin());
-		o.setName(og.getName());
-
-		BankAccount bA = new BankAccount();
-		bA.setUserName(s.getIdStudent());
-		bA.setCard_number(bag.getRandomCreditCardNumber());
-		bA.setAmount(bag.getRandomAmount());
-		bA.setLogin(sl);
-
-		at.univie.imse.model.Transaction tran = new at.univie.imse.model.Transaction();
-		tran.setStudent(s);
-		tran.setTeacher(t);
-		tran.setAmount(bA.getAmount());
-		//"P" as passed, "F" as failed
-		tran.setState("P");
-		tran.setIdTransaction(0);
-
-		Course c = new Course();
-		crgen.generateCourse();
-		c.setIdCourse(crgen.getName());
-		c.setTeacher(t);
-		c.setLanguage(crgen.getLanguage());
-		c.setTypeOfTheCourse(crgen.getCr_type());
-		c.setPrice(crgen.getPrice());
-		c.setNote(crgen.getNotes());
-
-		Assignment a = new Assignment();
-		AssignmentPK apk = new AssignmentPK();
-		apk.setIdCourse(c.getIdCourse());
-		apk.setIdStudent(s.getIdStudent());
-		a.setId(apk);
-		a.setCourse(c);
-		a.setStudent(s);
-		a.setIdTransaction(tran.getIdTransaction());
-
-		Location location = new Location();
-		lg.generateLocation();
-		location.setIdLocation(lg.getLoc_id());
-		location.setRoomCapacity(lg.getCapacity());
-		location.setNote(lg.getNote());
-
-		SchedulePK sch = new SchedulePK();
-		Schedule schedule = new Schedule();
-		sg.generateSchedule();
-		sch.setIdCourse(c.getIdCourse());
-		sch.setIdLocation(location.getIdLocation());
-		sch.setDateFrom(Date.from(sg.getFrom().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-		sch.setDateTo(Date.from(sg.getTo().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-		schedule.setId(sch);
-		schedule.setLocation(location);
-		schedule.setCourse(c);
-		schedule.setNote(sg.getNote());
-
-		session.save(tl);
-		session.save(t);
-		session.save(sl);
-		session.save(s);
-		session.save(ol);
-		session.save(o);
-		session.save(bA);
-		session.save(tran);
-		session.save(c);
-		session.save(a);
-		session.save(location);
-		session.save(schedule);
-
-		try {
-			transaction.commit();
-		} catch (Exception e) {
-			System.out.println(e.getLocalizedMessage());
+		for (Entry<Teacher, Login> entry : teachersWithLogins.entrySet()) {
+			session.save(entry.getValue());
+			session.save(entry.getKey());
 		}
 
-	}
+		for (Entry<Student, Login> entry : studentsWithLogins.entrySet()) {
+			session.save(entry.getValue());
+			session.save(entry.getKey());
+		}
 
-	/*private static void usage() {
-		System.out.println("Please specify full path to the configuration file.");
-	}*/
+		for (Entry<Organization, Login> entry : organizationsWithLogins.entrySet()) {
+			session.save(entry.getValue());
+			session.save(entry.getKey());
+		}
+
+		for (BankAccount bankAccount : bankAccounts) {
+			session.save(bankAccount);
+		}
+
+		for (at.univie.imse.model.Transaction transaction_ : transactions) {
+			session.save(transaction_);
+		}
+
+		for (Course course : courses) {
+			session.save(course);
+		}
+
+		for (Assignment assignment : assignments) {
+			session.save(assignment);
+		}
+
+		for (Location location : locations) {
+			session.save(location);
+		}
+
+		for (Schedule schedule : schedules) {
+			session.save(schedule);
+		}
+
+		transaction.commit();
+	}
 }

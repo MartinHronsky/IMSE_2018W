@@ -1,46 +1,47 @@
 package at.univie.imse.model;
 
-import javax.persistence.*;
 import java.io.Serializable;
+import javax.persistence.*;
+
 
 /**
  * The persistent class for the login database table.
  * 
  */
 @Entity
-@Table(name = "login")
-@NamedQuery(name = "Login.findAll", query = "SELECT l FROM Login l")
+@Table(name="login")
+@NamedQuery(name="Login.findAll", query="SELECT l FROM Login l")
 public class Login implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name = "user_name", unique = true, nullable = false, length = 45)
+	@Column(name="user_name", unique=true, nullable=false, length=45)
 	private String userName;
 
-	@Column(nullable = false, length = 30)
+	@Column(nullable=false, length=30)
 	private String password;
 
-	// bi-directional one-to-one association to BankAccount
-	@OneToOne(mappedBy = "login")
+	//bi-directional one-to-one association to BankAccount
+	@OneToOne(mappedBy="login")
 	private BankAccount bankAccount;
 
-	// bi-directional one-to-one association to Organization
-	@OneToOne(mappedBy = "login")
+	//bi-directional one-to-one association to Organization
+	@OneToOne(mappedBy="login")
 	private Organization organization;
 
-	// bi-directional one-to-one association to Student
-	@OneToOne(mappedBy = "login")
+	//bi-directional one-to-one association to Student
+	@OneToOne(mappedBy="login")
 	private Student student;
 
-	// bi-directional one-to-one association to Teacher
-	@OneToOne(mappedBy = "login")
+	//bi-directional one-to-one association to Teacher
+	@OneToOne(mappedBy="login")
 	private Teacher teacher;
 
 	public Login() {
 	}
 
 	public String getUserName() {
-		return userName;
+		return this.userName;
 	}
 
 	public void setUserName(String userName) {
@@ -48,7 +49,7 @@ public class Login implements Serializable {
 	}
 
 	public String getPassword() {
-		return password;
+		return this.password;
 	}
 
 	public void setPassword(String password) {
@@ -56,7 +57,7 @@ public class Login implements Serializable {
 	}
 
 	public BankAccount getBankAccount() {
-		return bankAccount;
+		return this.bankAccount;
 	}
 
 	public void setBankAccount(BankAccount bankAccount) {
@@ -64,7 +65,7 @@ public class Login implements Serializable {
 	}
 
 	public Organization getOrganization() {
-		return organization;
+		return this.organization;
 	}
 
 	public void setOrganization(Organization organization) {
@@ -72,7 +73,7 @@ public class Login implements Serializable {
 	}
 
 	public Student getStudent() {
-		return student;
+		return this.student;
 	}
 
 	public void setStudent(Student student) {
@@ -80,7 +81,7 @@ public class Login implements Serializable {
 	}
 
 	public Teacher getTeacher() {
-		return teacher;
+		return this.teacher;
 	}
 
 	public void setTeacher(Teacher teacher) {

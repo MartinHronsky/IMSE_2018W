@@ -1,49 +1,50 @@
 package at.univie.imse.model;
 
-import javax.persistence.*;
 import java.io.Serializable;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+
 
 /**
  * The persistent class for the teacher database table.
  * 
  */
 @Entity
-@Table(name = "teacher")
-@NamedQuery(name = "Teacher.findAll", query = "SELECT t FROM Teacher t")
+@Table(name="teacher")
+@NamedQuery(name="Teacher.findAll", query="SELECT t FROM Teacher t")
 public class Teacher implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name = "id_teacher", unique = true, nullable = false, length = 45)
+	@Column(name="id_teacher", unique=true, nullable=false, length=45)
 	private String idTeacher;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name = "date_of_birth", nullable = false)
+	@Column(name="date_of_birth", nullable=false)
 	private Date dateOfBirth;
 
-	@Column(nullable = false, length = 45)
+	@Column(nullable=false, length=45)
 	private String name;
 
-	// bi-directional many-to-one association to Course
-	@OneToMany(mappedBy = "teacher")
+	//bi-directional many-to-one association to Course
+	@OneToMany(mappedBy="teacher")
 	private List<Course> courses;
 
-	// bi-directional one-to-one association to Login
+	//bi-directional one-to-one association to Login
 	@OneToOne
-	@JoinColumn(name = "id_teacher", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(name="id_teacher", nullable=false, insertable=false, updatable=false)
 	private Login login;
 
-	// bi-directional many-to-one association to Transaction
-	@OneToMany(mappedBy = "teacher")
+	//bi-directional many-to-one association to Transaction
+	@OneToMany(mappedBy="teacher")
 	private List<Transaction> transactions;
 
 	public Teacher() {
 	}
 
 	public String getIdTeacher() {
-		return idTeacher;
+		return this.idTeacher;
 	}
 
 	public void setIdTeacher(String idTeacher) {
@@ -51,7 +52,7 @@ public class Teacher implements Serializable {
 	}
 
 	public Date getDateOfBirth() {
-		return dateOfBirth;
+		return this.dateOfBirth;
 	}
 
 	public void setDateOfBirth(Date dateOfBirth) {
@@ -59,7 +60,7 @@ public class Teacher implements Serializable {
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public void setName(String name) {
@@ -67,7 +68,7 @@ public class Teacher implements Serializable {
 	}
 
 	public List<Course> getCourses() {
-		return courses;
+		return this.courses;
 	}
 
 	public void setCourses(List<Course> courses) {
@@ -89,7 +90,7 @@ public class Teacher implements Serializable {
 	}
 
 	public Login getLogin() {
-		return login;
+		return this.login;
 	}
 
 	public void setLogin(Login login) {
@@ -97,7 +98,7 @@ public class Teacher implements Serializable {
 	}
 
 	public List<Transaction> getTransactions() {
-		return transactions;
+		return this.transactions;
 	}
 
 	public void setTransactions(List<Transaction> transactions) {

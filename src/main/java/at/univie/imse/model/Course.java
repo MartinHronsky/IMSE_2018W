@@ -1,54 +1,55 @@
 package at.univie.imse.model;
 
-import javax.persistence.*;
 import java.io.Serializable;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
+
 
 /**
  * The persistent class for the course database table.
  * 
  */
 @Entity
-@Table(name = "course")
-@NamedQuery(name = "Course.findAll", query = "SELECT c FROM Course c")
+@Table(name="course")
+@NamedQuery(name="Course.findAll", query="SELECT c FROM Course c")
 public class Course implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name = "id_course", unique = true, nullable = false, length = 45)
+	@Column(name="id_course", unique=true, nullable=false, length=45)
 	private String idCourse;
 
-	@Column(nullable = false, length = 45)
+	@Column(nullable=false, length=45)
 	private String language;
 
-	@Column(nullable = false, length = 45)
+	@Column(nullable=false, length=255)
 	private String note;
 
-	@Column(precision = 10, scale = 2)
+	@Column(precision=10, scale=2)
 	private BigDecimal price;
 
-	@Column(name = "type_of_the_course", nullable = false, length = 10)
+	@Column(name="type_of_the_course", nullable=false, length=20)
 	private String typeOfTheCourse;
 
-	// bi-directional many-to-one association to Assignment
-	@OneToMany(mappedBy = "course")
+	//bi-directional many-to-one association to Assignment
+	@OneToMany(mappedBy="course")
 	private List<Assignment> assignments;
 
-	// bi-directional many-to-one association to Teacher
+	//bi-directional many-to-one association to Teacher
 	@ManyToOne
-	@JoinColumn(name = "id_teacher", nullable = false)
+	@JoinColumn(name="id_teacher", nullable=false)
 	private Teacher teacher;
 
-	// bi-directional many-to-one association to Schedule
-	@OneToMany(mappedBy = "course")
+	//bi-directional many-to-one association to Schedule
+	@OneToMany(mappedBy="course")
 	private List<Schedule> schedules;
 
 	public Course() {
 	}
 
 	public String getIdCourse() {
-		return idCourse;
+		return this.idCourse;
 	}
 
 	public void setIdCourse(String idCourse) {
@@ -56,7 +57,7 @@ public class Course implements Serializable {
 	}
 
 	public String getLanguage() {
-		return language;
+		return this.language;
 	}
 
 	public void setLanguage(String language) {
@@ -64,7 +65,7 @@ public class Course implements Serializable {
 	}
 
 	public String getNote() {
-		return note;
+		return this.note;
 	}
 
 	public void setNote(String note) {
@@ -72,7 +73,7 @@ public class Course implements Serializable {
 	}
 
 	public BigDecimal getPrice() {
-		return price;
+		return this.price;
 	}
 
 	public void setPrice(BigDecimal price) {
@@ -80,7 +81,7 @@ public class Course implements Serializable {
 	}
 
 	public String getTypeOfTheCourse() {
-		return typeOfTheCourse;
+		return this.typeOfTheCourse;
 	}
 
 	public void setTypeOfTheCourse(String typeOfTheCourse) {
@@ -88,7 +89,7 @@ public class Course implements Serializable {
 	}
 
 	public List<Assignment> getAssignments() {
-		return assignments;
+		return this.assignments;
 	}
 
 	public void setAssignments(List<Assignment> assignments) {
@@ -110,7 +111,7 @@ public class Course implements Serializable {
 	}
 
 	public Teacher getTeacher() {
-		return teacher;
+		return this.teacher;
 	}
 
 	public void setTeacher(Teacher teacher) {
@@ -118,7 +119,7 @@ public class Course implements Serializable {
 	}
 
 	public List<Schedule> getSchedules() {
-		return schedules;
+		return this.schedules;
 	}
 
 	public void setSchedules(List<Schedule> schedules) {

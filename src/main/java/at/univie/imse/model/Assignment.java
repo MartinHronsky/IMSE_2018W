@@ -1,55 +1,56 @@
 package at.univie.imse.model;
 
-import javax.persistence.*;
 import java.io.Serializable;
+import javax.persistence.*;
+
 
 /**
  * The persistent class for the assignment database table.
  * 
  */
 @Entity
-@Table(name = "assignment")
-@NamedQuery(name = "Assignment.findAll", query = "SELECT a FROM Assignment a")
+@Table(name="assignment")
+@NamedQuery(name="Assignment.findAll", query="SELECT a FROM Assignment a")
 public class Assignment implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
 	private AssignmentPK id;
 
-	@Column(name = "id_transaction", nullable = false)
-	private Integer idTransaction;
+	@Column(name="id_transaction", nullable=false)
+	private String idTransaction;
 
-	// bi-directional many-to-one association to Course
+	//bi-directional many-to-one association to Course
 	@ManyToOne
-	@JoinColumn(name = "id_course", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(name="id_course", nullable=false, insertable=false, updatable=false)
 	private Course course;
 
-	// bi-directional many-to-one association to Student
+	//bi-directional many-to-one association to Student
 	@ManyToOne
-	@JoinColumn(name = "id_student", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(name="id_student", nullable=false, insertable=false, updatable=false)
 	private Student student;
 
 	public Assignment() {
 	}
 
 	public AssignmentPK getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(AssignmentPK id) {
 		this.id = id;
 	}
 
-	public Integer getIdTransaction() {
-		return idTransaction;
+	public String getIdTransaction() {
+		return this.idTransaction;
 	}
 
-	public void setIdTransaction(Integer idTransaction) {
+	public void setIdTransaction(String idTransaction) {
 		this.idTransaction = idTransaction;
 	}
 
 	public Course getCourse() {
-		return course;
+		return this.course;
 	}
 
 	public void setCourse(Course course) {
@@ -57,7 +58,7 @@ public class Assignment implements Serializable {
 	}
 
 	public Student getStudent() {
-		return student;
+		return this.student;
 	}
 
 	public void setStudent(Student student) {

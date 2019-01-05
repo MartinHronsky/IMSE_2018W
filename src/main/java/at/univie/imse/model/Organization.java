@@ -1,35 +1,36 @@
 package at.univie.imse.model;
 
-import javax.persistence.*;
 import java.io.Serializable;
+import javax.persistence.*;
+
 
 /**
  * The persistent class for the organization database table.
  * 
  */
 @Entity
-@Table(name = "organization")
-@NamedQuery(name = "Organization.findAll", query = "SELECT o FROM Organization o")
+@Table(name="organization")
+@NamedQuery(name="Organization.findAll", query="SELECT o FROM Organization o")
 public class Organization implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name = "id_organization", unique = true, nullable = false, length = 45)
+	@Column(name="id_organization", unique=true, nullable=false, length=45)
 	private String idOrganization;
 
-	@Column(nullable = false, length = 45)
+	@Column(nullable=false, length=45)
 	private String name;
 
-	// bi-directional one-to-one association to Login
+	//bi-directional one-to-one association to Login
 	@OneToOne
-	@JoinColumn(name = "id_organization", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(name="id_organization", nullable=false, insertable=false, updatable=false)
 	private Login login;
 
 	public Organization() {
 	}
 
 	public String getIdOrganization() {
-		return idOrganization;
+		return this.idOrganization;
 	}
 
 	public void setIdOrganization(String idOrganization) {
@@ -37,7 +38,7 @@ public class Organization implements Serializable {
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public void setName(String name) {
@@ -45,7 +46,7 @@ public class Organization implements Serializable {
 	}
 
 	public Login getLogin() {
-		return login;
+		return this.login;
 	}
 
 	public void setLogin(Login login) {

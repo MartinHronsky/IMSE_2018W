@@ -1,10 +1,7 @@
 package at.univie.imse.model;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import java.io.Serializable;
+import javax.persistence.*;
 
 /**
  * The primary key class for the schedule database table.
@@ -12,54 +9,46 @@ import java.io.Serializable;
  */
 @Embeddable
 public class SchedulePK implements Serializable {
-	// default serial version id, required for serializable classes.
+	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
-	@Column(name = "id_course", insertable = false, updatable = false, unique = true, nullable = false, length = 45)
+	@Column(name="id_course", insertable=false, updatable=false, unique=true, nullable=false, length=45)
 	private String idCourse;
 
-	@Column(name = "id_location", insertable = false, updatable = false, unique = true, nullable = false, length = 45)
+	@Column(name="id_location", insertable=false, updatable=false, unique=true, nullable=false, length=45)
 	private String idLocation;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name = "date_from", unique = true, nullable = false)
+	@Column(name="date_from", unique=true, nullable=false)
 	private java.util.Date dateFrom;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name = "date_to", unique = true, nullable = false)
+	@Column(name="date_to", unique=true, nullable=false)
 	private java.util.Date dateTo;
 
 	public SchedulePK() {
 	}
-
 	public String getIdCourse() {
-		return idCourse;
+		return this.idCourse;
 	}
-
 	public void setIdCourse(String idCourse) {
 		this.idCourse = idCourse;
 	}
-
 	public String getIdLocation() {
-		return idLocation;
+		return this.idLocation;
 	}
-
 	public void setIdLocation(String idLocation) {
 		this.idLocation = idLocation;
 	}
-
 	public java.util.Date getDateFrom() {
-		return dateFrom;
+		return this.dateFrom;
 	}
-
 	public void setDateFrom(java.util.Date dateFrom) {
 		this.dateFrom = dateFrom;
 	}
-
 	public java.util.Date getDateTo() {
-		return dateTo;
+		return this.dateTo;
 	}
-
 	public void setDateTo(java.util.Date dateTo) {
 		this.dateTo = dateTo;
 	}
@@ -71,19 +60,22 @@ public class SchedulePK implements Serializable {
 		if (!(other instanceof SchedulePK)) {
 			return false;
 		}
-		SchedulePK castOther = (SchedulePK) other;
-		return idCourse.equals(castOther.idCourse) && idLocation.equals(castOther.idLocation)
-				&& dateFrom.equals(castOther.dateFrom) && dateTo.equals(castOther.dateTo);
+		SchedulePK castOther = (SchedulePK)other;
+		return 
+			this.idCourse.equals(castOther.idCourse)
+			&& this.idLocation.equals(castOther.idLocation)
+			&& this.dateFrom.equals(castOther.dateFrom)
+			&& this.dateTo.equals(castOther.dateTo);
 	}
 
 	public int hashCode() {
-		int prime = 31;
+		final int prime = 31;
 		int hash = 17;
-		hash = hash * prime + idCourse.hashCode();
-		hash = hash * prime + idLocation.hashCode();
-		hash = hash * prime + dateFrom.hashCode();
-		hash = hash * prime + dateTo.hashCode();
-
+		hash = hash * prime + this.idCourse.hashCode();
+		hash = hash * prime + this.idLocation.hashCode();
+		hash = hash * prime + this.dateFrom.hashCode();
+		hash = hash * prime + this.dateTo.hashCode();
+		
 		return hash;
 	}
 }

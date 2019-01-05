@@ -1,8 +1,7 @@
 package at.univie.imse.model;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
 import java.io.Serializable;
+import javax.persistence.*;
 
 /**
  * The primary key class for the assignment database table.
@@ -10,30 +9,26 @@ import java.io.Serializable;
  */
 @Embeddable
 public class AssignmentPK implements Serializable {
-	// default serial version id, required for serializable classes.
+	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
-	@Column(name = "id_course", insertable = false, updatable = false, unique = true, nullable = false, length = 45)
+	@Column(name="id_course", insertable=false, updatable=false, unique=true, nullable=false, length=45)
 	private String idCourse;
 
-	@Column(name = "id_student", insertable = false, updatable = false, unique = true, nullable = false, length = 45)
+	@Column(name="id_student", insertable=false, updatable=false, unique=true, nullable=false, length=45)
 	private String idStudent;
 
 	public AssignmentPK() {
 	}
-
 	public String getIdCourse() {
-		return idCourse;
+		return this.idCourse;
 	}
-
 	public void setIdCourse(String idCourse) {
 		this.idCourse = idCourse;
 	}
-
 	public String getIdStudent() {
-		return idStudent;
+		return this.idStudent;
 	}
-
 	public void setIdStudent(String idStudent) {
 		this.idStudent = idStudent;
 	}
@@ -45,16 +40,18 @@ public class AssignmentPK implements Serializable {
 		if (!(other instanceof AssignmentPK)) {
 			return false;
 		}
-		AssignmentPK castOther = (AssignmentPK) other;
-		return idCourse.equals(castOther.idCourse) && idStudent.equals(castOther.idStudent);
+		AssignmentPK castOther = (AssignmentPK)other;
+		return 
+			this.idCourse.equals(castOther.idCourse)
+			&& this.idStudent.equals(castOther.idStudent);
 	}
 
 	public int hashCode() {
-		int prime = 31;
+		final int prime = 31;
 		int hash = 17;
-		hash = hash * prime + idCourse.hashCode();
-		hash = hash * prime + idStudent.hashCode();
-
+		hash = hash * prime + this.idCourse.hashCode();
+		hash = hash * prime + this.idStudent.hashCode();
+		
 		return hash;
 	}
 }

@@ -1,39 +1,40 @@
 package at.univie.imse.model;
 
-import javax.persistence.*;
 import java.io.Serializable;
+import javax.persistence.*;
+
 
 /**
  * The persistent class for the schedule database table.
  * 
  */
 @Entity
-@Table(name = "schedule")
-@NamedQuery(name = "Schedule.findAll", query = "SELECT s FROM Schedule s")
+@Table(name="schedule")
+@NamedQuery(name="Schedule.findAll", query="SELECT s FROM Schedule s")
 public class Schedule implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
 	private SchedulePK id;
 
-	@Column(length = 100)
+	@Column(length=100)
 	private String note;
 
-	// bi-directional many-to-one association to Course
+	//bi-directional many-to-one association to Course
 	@ManyToOne
-	@JoinColumn(name = "id_course", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(name="id_course", nullable=false, insertable=false, updatable=false)
 	private Course course;
 
-	// bi-directional many-to-one association to Location
+	//bi-directional many-to-one association to Location
 	@ManyToOne
-	@JoinColumn(name = "id_location", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(name="id_location", nullable=false, insertable=false, updatable=false)
 	private Location location;
 
 	public Schedule() {
 	}
 
 	public SchedulePK getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(SchedulePK id) {
@@ -41,7 +42,7 @@ public class Schedule implements Serializable {
 	}
 
 	public String getNote() {
-		return note;
+		return this.note;
 	}
 
 	public void setNote(String note) {
@@ -49,7 +50,7 @@ public class Schedule implements Serializable {
 	}
 
 	public Course getCourse() {
-		return course;
+		return this.course;
 	}
 
 	public void setCourse(Course course) {
@@ -57,7 +58,7 @@ public class Schedule implements Serializable {
 	}
 
 	public Location getLocation() {
-		return location;
+		return this.location;
 	}
 
 	public void setLocation(Location location) {

@@ -1,38 +1,39 @@
 package at.univie.imse.model;
 
-import javax.persistence.*;
 import java.io.Serializable;
+import javax.persistence.*;
 import java.util.List;
+
 
 /**
  * The persistent class for the location database table.
  * 
  */
 @Entity
-@Table(name = "location")
-@NamedQuery(name = "Location.findAll", query = "SELECT l FROM Location l")
+@Table(name="location")
+@NamedQuery(name="Location.findAll", query="SELECT l FROM Location l")
 public class Location implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name = "id_location", unique = true, nullable = false, length = 45)
+	@Column(name="id_location", unique=true, nullable=false, length=45)
 	private String idLocation;
 
-	@Column(length = 100)
+	@Column(length=100)
 	private String note;
 
-	@Column(name = "room_capacity", nullable = false)
+	@Column(name="room_capacity", nullable=false)
 	private Integer roomCapacity;
 
-	// bi-directional many-to-one association to Schedule
-	@OneToMany(mappedBy = "location")
+	//bi-directional many-to-one association to Schedule
+	@OneToMany(mappedBy="location")
 	private List<Schedule> schedules;
 
 	public Location() {
 	}
 
 	public String getIdLocation() {
-		return idLocation;
+		return this.idLocation;
 	}
 
 	public void setIdLocation(String idLocation) {
@@ -40,7 +41,7 @@ public class Location implements Serializable {
 	}
 
 	public String getNote() {
-		return note;
+		return this.note;
 	}
 
 	public void setNote(String note) {
@@ -48,7 +49,7 @@ public class Location implements Serializable {
 	}
 
 	public Integer getRoomCapacity() {
-		return roomCapacity;
+		return this.roomCapacity;
 	}
 
 	public void setRoomCapacity(Integer roomCapacity) {
@@ -56,7 +57,7 @@ public class Location implements Serializable {
 	}
 
 	public List<Schedule> getSchedules() {
-		return schedules;
+		return this.schedules;
 	}
 
 	public void setSchedules(List<Schedule> schedules) {
