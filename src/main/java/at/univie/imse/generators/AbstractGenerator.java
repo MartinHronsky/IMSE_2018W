@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -119,20 +120,33 @@ public class AbstractGenerator {
 		return bankAccounts;
 	}
 
-	public static List<Transaction> generateTransactions(List<Student> students, List<Teacher> teachers, int howMany) {
-		List<Transaction> transactions = new ArrayList<Transaction>();
-		for (int i = 0; i < howMany; i++) {
-			Student stundent = students.get(random.nextInt(students.size()));
-			Teacher teacher = teachers.get(random.nextInt(teachers.size()));
-			Transaction transaction = new Transaction();
-			transaction.setStudent(stundent);
-			transaction.setTeacher(teacher);
-			transaction.setIdTransaction(UUID.randomUUID().toString());
-			transaction.setState("P");
-			transaction.setAmount(new BigDecimal(random.nextInt(50)));
-			transactions.add(transaction);
+	public static Map<Transaction, Assignment> generateTransactions(List<Student> students, List<Course> courses) {
+		Map<Transaction, Assignment> transactionsMap = new HashMap<Transaction, Assignment>();
+		for (Course course : courses) {
+			Collections.shuffle(students);
+			List<Student> randomStudents = students.subList(0, random.nextInt(students.size()));
+
+			for (Student student : randomStudents) {
+				Transaction transaction = new Transaction();
+				Teacher teacher = course.getTeacher();
+				transaction.setStudent(student);
+				transaction.setTeacher(teacher);
+				transaction.setIdTransaction(UUID.randomUUID().toString());
+				transaction.setState("P");
+				transaction.setAmount(new BigDecimal(random.nextInt(50)));
+
+				Assignment assignment = new Assignment();
+				AssignmentPK assignmentPK = new AssignmentPK();
+				assignmentPK.setIdCourse(course.getIdCourse());
+				assignmentPK.setIdStudent(student.getIdStudent());
+				assignment.setId(assignmentPK);
+				assignment.setCourse(course);
+				assignment.setStudent(student);
+				assignment.setIdTransaction(transaction.getIdTransaction());
+				transactionsMap.put(transaction, assignment);
+			}
 		}
-		return transactions;
+		return transactionsMap;
 	}
 
 	public static List<Course> generateCourses(List<Teacher> teachers, int howMany) {
@@ -149,25 +163,6 @@ public class AbstractGenerator {
 			courses.add(course);
 		}
 		return courses;
-	}
-
-	public static List<Assignment> generateAssignments(List<Transaction> transactions, List<Course> courses) {
-		List<Assignment> assignments = new ArrayList<Assignment>();
-
-		for (Transaction transaction : transactions) {
-			Course randomCourse = courses.get(random.nextInt(courses.size()));
-			Student student = transaction.getStudent();
-			Assignment assignment = new Assignment();
-			AssignmentPK assignmentPK = new AssignmentPK();
-			assignmentPK.setIdCourse(randomCourse.getIdCourse());
-			assignmentPK.setIdStudent(student.getIdStudent());
-			assignment.setId(assignmentPK);
-			assignment.setCourse(randomCourse);
-			assignment.setStudent(student);
-			assignment.setIdTransaction(transaction.getIdTransaction());
-			assignments.add(assignment);
-		}
-		return assignments;
 	}
 
 	public static List<Location> generateLocations(int howMany) {

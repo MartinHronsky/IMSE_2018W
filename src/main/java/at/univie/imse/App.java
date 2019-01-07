@@ -29,23 +29,50 @@ public class App {
 
 	public static void main(String[] args) {
 
+		boolean generatedSuccessfully = false;
+
+		while (!generatedSuccessfully) {
+			try {
+				initializeDatabase();
+				generatedSuccessfully = true;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private static void initializeDatabase() throws Exception {
+		// Get the hibernate session
 		Session session = HibernateUtil.getSessionFactory("src/main/resources/configuration.properties").openSession();
 
-		Map<Teacher, Login> teachersWithLogins = AbstractGenerator.generateTeachersWithLogins(5000);
-		Map<Student, Login> studentsWithLogins = AbstractGenerator.generateStudentsWithLogins(10000);
-		Map<Organization, Login> organizationsWithLogins = AbstractGenerator.generateOrganizationsWithLogins(150);
-		List<BankAccount> bankAccounts = AbstractGenerator.generateBankAccounts(studentsWithLogins.values());
-		List<Student> students = new ArrayList<Student>(studentsWithLogins.keySet());
+		// Generate logins
+		Map<Teacher, Login> teachersWithLogins = AbstractGenerator.generateTeachersWithLogins(500);
+		Map<Student, Login> studentsWithLogins = AbstractGenerator.generateStudentsWithLogins(500);
+		Map<Organization, Login> organizationsWithLogins = AbstractGenerator.generateOrganizationsWithLogins(500);
+
+		// Generate bank accounts for all logins
+		List<Login> allLogins = new ArrayList<Login>();
+		allLogins.addAll(teachersWithLogins.values());
+		allLogins.addAll(studentsWithLogins.values());
+		allLogins.addAll(organizationsWithLogins.values());
+		List<BankAccount> bankAccounts = AbstractGenerator.generateBankAccounts(allLogins);
+
+		// Generate courses
 		List<Teacher> teachers = new ArrayList<Teacher>(teachersWithLogins.keySet());
-		List<at.univie.imse.model.Transaction> transactions = AbstractGenerator.generateTransactions(students, teachers,
-				1400);
-		List<Course> courses = AbstractGenerator.generateCourses(teachers, 360);
-		List<Assignment> assignments = AbstractGenerator.generateAssignments(transactions, courses);
-		List<Location> locations = AbstractGenerator.generateLocations(150);
-		List<Schedule> schedules = AbstractGenerator.generateSchedules(courses, locations, 4000);
+		List<Course> courses = AbstractGenerator.generateCourses(teachers, 500);
+
+		// Generate transactions
+		List<Student> students = new ArrayList<Student>(studentsWithLogins.keySet());
+		Map<at.univie.imse.model.Transaction, Assignment> transactions = AbstractGenerator
+				.generateTransactions(students, courses);
+
+		// Generate locations and schedules
+		List<Location> locations = AbstractGenerator.generateLocations(500);
+		List<Schedule> schedules = AbstractGenerator.generateSchedules(courses, locations, 500);
 
 		Transaction transaction = session.beginTransaction();
 
+		// Persist all data
 		for (Entry<Teacher, Login> entry : teachersWithLogins.entrySet()) {
 			session.save(entry.getValue());
 			session.save(entry.getKey());
@@ -65,7 +92,7 @@ public class App {
 			session.save(bankAccount);
 		}
 
-		for (at.univie.imse.model.Transaction transaction_ : transactions) {
+		for (at.univie.imse.model.Transaction transaction_ : transactions.keySet()) {
 			session.save(transaction_);
 		}
 
@@ -73,7 +100,7 @@ public class App {
 			session.save(course);
 		}
 
-		for (Assignment assignment : assignments) {
+		for (Assignment assignment : transactions.values()) {
 			session.save(assignment);
 		}
 
@@ -85,6 +112,7 @@ public class App {
 			session.save(schedule);
 		}
 
+		// Commit the tranasction
 		transaction.commit();
 	}
 }
