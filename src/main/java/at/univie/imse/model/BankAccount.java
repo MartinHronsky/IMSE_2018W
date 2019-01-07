@@ -16,7 +16,7 @@ public class BankAccount implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="user_name", unique=true, nullable=false, length=45)
+	@Column(name="user_name", unique=true, nullable=false, length=255)
 	private String userName;
 
 	@Column(nullable=false, precision=10, scale=2)

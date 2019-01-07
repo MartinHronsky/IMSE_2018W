@@ -68,7 +68,7 @@ public class App {
 
 		// Generate locations and schedules
 		List<Location> locations = AbstractGenerator.generateLocations(500);
-		List<Schedule> schedules = AbstractGenerator.generateSchedules(courses, locations, 500);
+		List<Schedule> schedules = AbstractGenerator.generateSchedules(transactions, students, locations, courses);
 
 		Transaction transaction = session.beginTransaction();
 

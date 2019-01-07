@@ -17,7 +17,7 @@ public class Assignment implements Serializable {
 	@EmbeddedId
 	private AssignmentPK id;
 
-	@Column(name="id_transaction", nullable=false)
+	@Column(name="id_transaction", nullable=false, length=255)
 	private String idTransaction;
 
 	//bi-directional many-to-one association to Course

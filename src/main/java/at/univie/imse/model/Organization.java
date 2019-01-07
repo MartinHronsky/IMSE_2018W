@@ -15,10 +15,10 @@ public class Organization implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="id_organization", unique=true, nullable=false, length=45)
+	@Column(name="id_organization", unique=true, nullable=false, length=255)
 	private String idOrganization;
 
-	@Column(nullable=false, length=45)
+	@Column(nullable=false, length=255)
 	private String name;
 
 	//bi-directional one-to-one association to Login

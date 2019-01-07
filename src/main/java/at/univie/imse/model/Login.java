@@ -15,10 +15,10 @@ public class Login implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="user_name", unique=true, nullable=false, length=45)
+	@Column(name="user_name", unique=true, nullable=false, length=255)
 	private String userName;
 
-	@Column(nullable=false, length=30)
+	@Column(nullable=false, length=255)
 	private String password;
 
 	//bi-directional one-to-one association to BankAccount

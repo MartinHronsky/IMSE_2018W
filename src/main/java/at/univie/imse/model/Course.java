@@ -17,10 +17,10 @@ public class Course implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="id_course", unique=true, nullable=false, length=45)
+	@Column(name="id_course", unique=true, nullable=false, length=255)
 	private String idCourse;
 
-	@Column(nullable=false, length=45)
+	@Column(nullable=false, length=255)
 	private String language;
 
 	@Column(nullable=false, length=255)
@@ -29,7 +29,7 @@ public class Course implements Serializable {
 	@Column(precision=10, scale=2)
 	private BigDecimal price;
 
-	@Column(name="type_of_the_course", nullable=false, length=20)
+	@Column(name="type_of_the_course", nullable=false, length=255)
 	private String typeOfTheCourse;
 
 	//bi-directional many-to-one association to Assignment

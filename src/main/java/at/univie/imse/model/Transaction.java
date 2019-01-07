@@ -16,7 +16,7 @@ public class Transaction implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="id_transaction", unique=true, nullable=false, length=45)
+	@Column(name="id_transaction", unique=true, nullable=false, length=255)
 	private String idTransaction;
 
 	@Column(precision=10, scale=2)

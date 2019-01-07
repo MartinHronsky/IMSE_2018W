@@ -17,14 +17,14 @@ public class Teacher implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="id_teacher", unique=true, nullable=false, length=45)
+	@Column(name="id_teacher", unique=true, nullable=false, length=255)
 	private String idTeacher;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name="date_of_birth", nullable=false)
 	private Date dateOfBirth;
 
-	@Column(nullable=false, length=45)
+	@Column(nullable=false, length=255)
 	private String name;
 
 	//bi-directional many-to-one association to Course

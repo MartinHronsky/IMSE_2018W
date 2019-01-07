@@ -179,26 +179,50 @@ public class AbstractGenerator {
 		return locations;
 	}
 
-	public static List<Schedule> generateSchedules(List<Course> courses, List<Location> locations, int howMany) {
+	public static List<Schedule> generateSchedules(Map<Transaction, Assignment> transactions, List<Student> students,
+			List<Location> locations, List<Course> courses) {
+
 		List<Schedule> schedules = new ArrayList<Schedule>();
-		for (int i = 0; i < howMany; i++) {
-			scheduleGenerator.generateSchedule();
-			Course randomCourse = courses.get(random.nextInt(courses.size()));
-			Location randomLocation = locations.get(random.nextInt(locations.size()));
-			SchedulePK schedulePK = new SchedulePK();
-			Schedule schedule = new Schedule();
-			schedulePK.setIdCourse(randomCourse.getIdCourse());
-			schedulePK.setIdLocation(randomLocation.getIdLocation());
-			schedulePK.setDateFrom(
-					Date.from(scheduleGenerator.getFrom().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-			schedulePK.setDateTo(Date.from(scheduleGenerator.getTo().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-			schedule.setId(schedulePK);
-			schedule.setLocation(randomLocation);
-			schedule.setCourse(randomCourse);
-			schedule.setNote(scheduleGenerator.getNote());
-			schedules.add(schedule);
+		for (Course course : courses) {
+			List<Student> studentsThatPaidForThisCourse = new ArrayList<Student>();
+			Collection<Assignment> assignments = transactions.values();
+			for (Assignment assignment : assignments) {
+				if (course.equals(assignment.getCourse())) {
+					studentsThatPaidForThisCourse.add(assignment.getStudent());
+				}
+			}
+			int amountOfSchedules = random.nextInt(5) + 1;
+			for (int i = 0; i < amountOfSchedules; i++) {
+				Collections.shuffle(studentsThatPaidForThisCourse);
+				scheduleGenerator.generateSchedule();
+				Location randomLocation = locations.get(random.nextInt(locations.size()));
+				SchedulePK schedulePK = new SchedulePK();
+				Schedule schedule = new Schedule();
+				schedulePK.setIdCourse(course.getIdCourse());
+				schedulePK.setIdLocation(randomLocation.getIdLocation());
+				schedulePK.setDateFrom(
+						Date.from(scheduleGenerator.getFrom().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+				schedulePK.setDateTo(
+						Date.from(scheduleGenerator.getTo().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+				schedule.setId(schedulePK);
+				schedule.setLocation(randomLocation);
+				schedule.setCourse(course);
+				schedule.setNote(scheduleGenerator.getNote());
+				List<Student> assignedStudents = studentsThatPaidForThisCourse.subList(0,
+						random.nextInt(studentsThatPaidForThisCourse.size()));
+				schedule.setStudents(assignedStudents);
+				for (Student student : assignedStudents) {
+					int index = students.indexOf(student);
+					Student studentToGetAssigned = students.get(index);
+					List<Schedule> hisCurrentSchedules = studentToGetAssigned.getSchedules();
+					hisCurrentSchedules.add(schedule);
+					studentToGetAssigned.setSchedules(hisCurrentSchedules);
+					students.set(index, studentToGetAssigned);
+				}
+				schedules.add(schedule);
+
+			}
 		}
 		return schedules;
 	}
-
 }

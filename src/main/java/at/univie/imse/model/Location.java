@@ -16,10 +16,10 @@ public class Location implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="id_location", unique=true, nullable=false, length=45)
+	@Column(name="id_location", unique=true, nullable=false, length=255)
 	private String idLocation;
 
-	@Column(length=100)
+	@Column(length=255)
 	private String note;
 
 	@Column(name="room_capacity", nullable=false)

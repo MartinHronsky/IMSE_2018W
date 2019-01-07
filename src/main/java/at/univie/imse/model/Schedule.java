@@ -1,36 +1,50 @@
 package at.univie.imse.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the schedule database table.
  * 
  */
 @Entity
-@Table(name="schedule")
-@NamedQuery(name="Schedule.findAll", query="SELECT s FROM Schedule s")
+@Table(name = "schedule")
+@NamedQuery(name = "Schedule.findAll", query = "SELECT s FROM Schedule s")
 public class Schedule implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
 	private SchedulePK id;
 
-	@Column(length=100)
+	@Column(length = 255)
 	private String note;
 
-	//bi-directional many-to-one association to Course
+	// bi-directional many-to-one association to Course
 	@ManyToOne
-	@JoinColumn(name="id_course", nullable=false, insertable=false, updatable=false)
+	@JoinColumn(name = "id_course", nullable = false, insertable = false, updatable = false)
 	private Course course;
 
-	//bi-directional many-to-one association to Location
+	// bi-directional many-to-one association to Location
 	@ManyToOne
-	@JoinColumn(name="id_location", nullable=false, insertable=false, updatable=false)
+	@JoinColumn(name = "id_location", nullable = false, insertable = false, updatable = false)
 	private Location location;
 
+	// bi-directional many-to-many association to Student
+	@ManyToMany(mappedBy = "schedules")
+	private List<Student> students;
+
 	public Schedule() {
+		this.students = new ArrayList<Student>();
 	}
 
 	public SchedulePK getId() {
@@ -63,6 +77,14 @@ public class Schedule implements Serializable {
 
 	public void setLocation(Location location) {
 		this.location = location;
+	}
+
+	public List<Student> getStudents() {
+		return this.students;
+	}
+
+	public void setStudents(List<Student> students) {
+		this.students = students;
 	}
 
 }

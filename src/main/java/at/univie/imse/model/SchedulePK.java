@@ -12,10 +12,10 @@ public class SchedulePK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
-	@Column(name="id_course", insertable=false, updatable=false, unique=true, nullable=false, length=45)
+	@Column(name="id_course", insertable=false, updatable=false, unique=true, nullable=false, length=255)
 	private String idCourse;
 
-	@Column(name="id_location", insertable=false, updatable=false, unique=true, nullable=false, length=45)
+	@Column(name="id_location", insertable=false, updatable=false, unique=true, nullable=false, length=255)
 	private String idLocation;
 
 	@Temporal(TemporalType.DATE)
